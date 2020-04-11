@@ -1,0 +1,11 @@
+version: '2.3'
+services: 
+    db:
+        env_file: batata.env
+        build: 
+            context: ./sqlserver
+        restart: always
+        ports: 
+            - 1433:1433
+        command: 
+            bash -c "sh -x /tmp/entrypoint.sh"
