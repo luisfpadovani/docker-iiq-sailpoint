@@ -1,7 +1,7 @@
 version: '2.3'
 services: 
     db:
-        env_file: batata.env
+        container_name: bd_sql_iiq
         build: 
             context: ./sqlserver
         restart: always
