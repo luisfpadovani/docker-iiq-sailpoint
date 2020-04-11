@@ -1,4 +1,3 @@
-# docker-iiq-sailpoint
 Repositorio com o intuito de facilitar o uso no desenvolvimento da ferramenta IIQ da Sailpoint
 
 ------------
