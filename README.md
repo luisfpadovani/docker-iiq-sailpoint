@@ -10,7 +10,7 @@ Foi desenvolvido um compose com dois dockerfile para criação do ambiente inici
 
 
 <h4>Dêpendencias </h4>
-mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04 
+mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04  <br/>
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
 
 <h4>Mode de uso</h4>
