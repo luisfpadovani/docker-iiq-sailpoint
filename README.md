@@ -23,7 +23,7 @@ docker-compose up
 Acessar a url:  http://localhost:8080/identityiq/
 
 <b>Utilizar usuário e senha default do pacote</b>
-
+</p>
 
 <h4>Desenvolvidor por </h4>
 <b>Luis Padovani</b> @luisfpadovani <br/>
