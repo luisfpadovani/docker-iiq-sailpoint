@@ -14,7 +14,7 @@ mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04  <br/>
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
 
 <h4>Mode de uso</h4>
-<p> Disponibilizar a estrutura dentro de uma pasta, executar o comando
+<p> Disponibilizar a estrutura dentro de uma pasta, executar o comando</p>
 
 ```yaml
 docker-compose up
@@ -23,7 +23,7 @@ docker-compose up
 Acessar a url:  http://localhost:8080/identityiq/
 
 <b>Utilizar usuário e senha default do pacote</b>
-</p>
+
 
 <h4>Desenvolvidor por </h4>
 <b>Luis Padovani</b> @luisfpadovani <br/>
