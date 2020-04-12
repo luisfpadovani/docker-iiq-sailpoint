@@ -13,19 +13,21 @@ Foi desenvolvido um compose com dois dockerfile para criação do ambiente inici
 <b>/tomcat/arquivo_padrao/</b> => Pasta responsavel por conter identityiq.war e ssb.zip</br>
 <b>/tomcat/codigo_iiq/custom</b> => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB</br>
 <b>/tomcat/codigo_iiq/web</b> => Pasta responsavel por conter todos os codigos do produto alterado</br>
-
+------------
 <h4>Mode de uso</h4>
 <p> Disponibilizar a estrutura dentro de uma pasta, executar o comando</p>
 
 ```yaml
 docker-compose up
 ```
-
+------------
 Acessar a url:  http://localhost:8080/identityiq/
 
 <b>Utilizar usuário e senha default do pacote</b>
 
 
+
+------------
 <h4>Desenvolvidor por </h4>
 <b>Luis Padovani</b> @luisfpadovani <br/>
 <b>Vinicius Bezerra</b> @vinbeze
