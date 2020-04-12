@@ -8,9 +8,11 @@ Foi desenvolvido um compose com dois dockerfile para criação do ambiente inici
 ------------
 
 
-<h4>Dêpendencias </h4>
-mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04  <br/>
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
+<h4>Pastas </h4>
+/sqlserver/scripts/ => Pasta responsavel por servir de repositorio de scripts de banco de dados
+/tomcat/arquivo_padrao/ => Pasta responsavel por conter identityiq.war e ssb.zip
+/tomcat/codigo_iiq/custom => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB
+/tomcat/codigo_iiq/web => Pasta responsavel por conter todos os codigos do produto alterado
 
 <h4>Mode de uso</h4>
 <p> Disponibilizar a estrutura dentro de uma pasta, executar o comando</p>

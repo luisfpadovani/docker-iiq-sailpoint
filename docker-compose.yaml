@@ -12,15 +12,14 @@ services:
         healthcheck:
             test: [ "CMD","/opt/mssql-tools/bin/sqlcmd", "-S" , "localhost", "-U", "healthcheck", "-P", "Change@123", "-Q", "SELECT 1" ]
             timeout: 10s
-            retries: 20
-    
+            retries: 20    
     iiq:
+        container_name: web_iiq
         build: ./tomcat
         restart: always
         ports: 
             - 8080:8080
             - 9009:9009
-        container_name: web_iiq
         depends_on: 
             db:
                 condition: service_healthy
