@@ -9,10 +9,10 @@ Foi desenvolvido um compose com dois dockerfile para criação do ambiente inici
 
 
 <h4>Pastas </h4>
-/sqlserver/scripts/ => Pasta responsavel por servir de repositorio de scripts de banco de dados
-/tomcat/arquivo_padrao/ => Pasta responsavel por conter identityiq.war e ssb.zip
-/tomcat/codigo_iiq/custom => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB
-/tomcat/codigo_iiq/web => Pasta responsavel por conter todos os codigos do produto alterado
+<b>/sqlserver/scripts/</b> => Pasta responsavel por servir de repositorio de scripts de banco de dados </br>
+<b>/tomcat/arquivo_padrao/</b> => Pasta responsavel por conter identityiq.war e ssb.zip</br>
+<b>/tomcat/codigo_iiq/custom</b> => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB</br>
+<b>/tomcat/codigo_iiq/web</b> => Pasta responsavel por conter todos os codigos do produto alterado</br>
 
 <h4>Mode de uso</h4>
 <p> Disponibilizar a estrutura dentro de uma pasta, executar o comando</p>
