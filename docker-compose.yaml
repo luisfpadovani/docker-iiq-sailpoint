@@ -20,6 +20,8 @@ services:
         ports: 
             - 8080:8080
             - 9009:9009
+        command: 
+            bash -c "sh -x /tmp/entrypoint.sh"
         depends_on: 
             db:
                 condition: service_healthy

@@ -8,30 +8,26 @@ RUN apt-get -y update  && \
         apt-get install -y vim && \
         apt-get install -y zip
 
-#CRIAÇÃO DA PASTA DO IIQ
-RUN mkdir webapps/identityiq/
 
-#COPIAR PACOTE .WAR e SSB DA MAQUINA PARA O CONTAINER
-COPY ./arquivos_padrao/identityiq.war webapps/identityiq/
+
+#COPIAR ARQUIVOS SH PARA DAR START NO CATHALINA
+COPY ./*.sh /tmp/
+#COPIAR O SSB DA MAQUINA PARA O DOCKER
 COPY ./arquivos_padrao/ssb.zip ../
-
+#CRIAR VARIAVEL DE AMBIENTE PARA O CONTAINER CRIAR .WAR
+ENV SPTARGET=docker
 #REALIZAR UNZIP DO SSB
 RUN unzip ../ssb.zip -d ../ssb/
-#REMOVER SSB
+#REMOVER PASTA QUE NÃO SERA MAIS UTILIZADA DO ZIP SSB
 RUN rm ../ssb.zip
+#DAR PERMISSÂO PARA RODAR O build.sh
+RUN chmod -R 777 ../ssb/
 
-#INSTALAR .WAR NO CONTAINER
-RUN cd webapps/identityiq && jar -xf identityiq.war
-#REMOVER WAR
-RUN rm webapps/identityiq/identityiq.war
+#AQUI VAI COPIAR PASTAS E MONTAR IIQ COM AS MUDANÇAS
 
-#PERMISSIONAMENTO NA PASTA DO IIQ
-RUN chmod +x webapps/identityiq/WEB-INF/bin/iiq
-#REMOVER IIQ PROPERTIES PADRÂO
-RUN rm webapps/identityiq/WEB-INF/classes/iiq.properties
-#SUBSTITUIR IIQ PROPERTIES
-COPY ./arquivos_padrao/iiq.properties webapps/identityiq/WEB-INF/classes/
+#GERAR O PACOTE DO IIQ DEFAULT
+RUN cd ../ssb && sh build.sh clean war
 
-#CRIAÇÃO DA PASTA CUSTOM PARA NOVOS ARTEFATOS
-RUN mkdir webapps/identityiq/WEB-INF/custom
-COPY ./codigo_iiq/custom/ webapps/identityiq/WEB-INF/custom/
+#MOVE PACOTE CRIADO PARA A PASTA DO TOMCAT
+RUN mv ../ssb/build/deploy/identityiq.war  webapps/identityiq.war
+
