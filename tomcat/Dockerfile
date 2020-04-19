@@ -29,5 +29,11 @@ RUN chmod -R 777 ../ssb/
 RUN cd ../ssb && sh build.sh clean war
 
 #MOVE PACOTE CRIADO PARA A PASTA DO TOMCAT
-RUN mv ../ssb/build/deploy/identityiq.war  webapps/identityiq.war
+RUN mkdir webapps/identityiq/
+RUN mv ../ssb/build/deploy/identityiq.war  webapps/identityiq/identityiq.war
 
+RUN cd webapps/identityiq && jar -xf identityiq.war
+RUN rm webapps/identityiq/identityiq.war
+RUN chmod +x webapps/identityiq/WEB-INF/bin/iiq
+
+RUN echo "import /usr/local/tomcat/webapps/identityiq/WEB-INF/config/init.xml" >> /tmp/init.txt

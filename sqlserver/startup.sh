@@ -18,7 +18,7 @@ pathScripts="/tmp/scripts/"
 for entry in `ls $pathScripts | sort -n`; do
     /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Change@123 -i ${pathScripts}${entry} -o /tmp/execucao${contador}.txt
 done
-rm -rf ${pathScripts}/*
+rm -rf ${pathScripts}*
 echo "********************" 
 echo "********************" 
 echo "********************" 
