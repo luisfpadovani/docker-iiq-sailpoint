@@ -23,17 +23,17 @@ RUN rm ../ssb.zip
 #DAR PERMISSÂO PARA RODAR O build.sh
 RUN chmod -R 777 ../ssb/
 
-#AQUI VAI COPIAR PASTAS E MONTAR IIQ COM AS MUDANÇAS
+#AQUI VAI COPIAR PASTAS E MONTAR IIQ COM AS MUDANÇAS DO DIA A DIA
+COPY ./codigo_iiq/config/* ../ssb/config/
+COPY ./codigo_iiq/web/* ../ssb/web/
 
 #GERAR O PACOTE DO IIQ DEFAULT
 RUN cd ../ssb && sh build.sh clean war
-
-#MOVE PACOTE CRIADO PARA A PASTA DO TOMCAT
-RUN mkdir webapps/identityiq/
-RUN mv ../ssb/build/deploy/identityiq.war  webapps/identityiq/identityiq.war
-
-RUN cd webapps/identityiq && jar -xf identityiq.war
-RUN rm webapps/identityiq/identityiq.war
+#REALIZA UNZIP DO PACOTE NA PASTA DO TOMCAT
+RUN unzip ../ssb/build/deploy/identityiq.war -d webapps/identityiq
+#REMOVE WAR PARA DEIXAR O PACOTE MENOR
+RUN rm ../ssb/build/deploy/identityiq.war && rm ../ssb/build/deploy/identityiq.war.MD5
+#CHMOD PARA O IIQ CONSOLE SER HABILITADO
 RUN chmod +x webapps/identityiq/WEB-INF/bin/iiq
-
+#GERAR ARQUIVO PARA REALIZAR O INIT.XML
 RUN echo "import /usr/local/tomcat/webapps/identityiq/WEB-INF/config/init.xml" >> /tmp/init.txt
