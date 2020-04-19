@@ -9,13 +9,13 @@ Foi desenvolvido um compose com dois dockerfile para criação do ambiente inici
 
 
 <h4>Pastas </h4>
-<b>/sqlserver/scripts/</b> => Pasta responsavel por servir de repositorio de scripts de banco de dados </br>
-<b>/tomcat/arquivo_padrao/</b> => Pasta responsavel por conter identityiq.war e ssb.zip</br>
+<b>/sqlserver/scripts/</b> => Pasta responsavel por servir de repositorio de scripts de banco de dados,neácessrio realizar a inserção dos scripts de forma crescent. Exe: 1-ScriptEstrutural.sql , 2-ScriptExemplo.sql, 3-ScriptExemplo.sql, etc... </br>
+<b>/tomcat/arquivo_padrao/</b> => Pasta responsavel por conter ssb.zip. Necessário configurar o SSB,  contendo toda a estrutura pronta para o primeiro build do pacote. Exe: docker.iiq.properties com usuario e senha, build.properties configurado com a versão do pacote, zip do pacote dentro da pasta ga.</br>
 <b>/tomcat/codigo_iiq/custom</b> => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB</br>
 <b>/tomcat/codigo_iiq/web</b> => Pasta responsavel por conter todos os codigos do produto alterado</br>
 ------------
 <h4>Mode de uso</h4>
-<p> Disponibilizar a estrutura dentro de uma pasta, executar o comando</p>
+<p> Depois de disponibilizar o SSB.ZIP dentro do diretorio correto (e com todas esfpecificaçes), executar o comando:</p>
 
 ```yaml
 docker-compose up
