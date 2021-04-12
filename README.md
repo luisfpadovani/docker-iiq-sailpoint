@@ -30,4 +30,3 @@ Acessar a url:  http://localhost:8080/identityiq/
 ------------
 <h4>Desenvolvidor por </h4>
 <b>Luis Padovani</b> @luisfpadovani <br/>
-<b>Vinicius Bezerra</b> @vinbeze
