@@ -1,0 +1,54 @@
+dn: ou=Groups,dc=corp1
+changetype: add
+objectclass: organizationalUnit
+ou: Groups
+
+dn: ou=Users,dc=corp1
+changetype: add
+objectclass: organizationalUnit
+ou: Users
+
+dn: cn=developer,ou=Users,dc=corp1
+changetype: add
+objectclass: customPerson
+objectclass: inetOrgPerson
+cn: developer
+givenname: developer
+sn: Developer
+displayname: Developer User
+mail: developer@corp
+userpassword: Change@123
+sAMAccountName: Mock
+
+dn: cn=maintainer,ou=Users,dc=corp1
+changetype: add
+objectclass: inetOrgPerson
+cn: maintainer
+givenname: maintainer
+sn: Maintainer
+displayname: Maintainer User
+mail: maintainer@corp
+userpassword: Change@123
+
+dn: cn=admin_gh,ou=Users,dc=corp1
+changetype: add
+objectclass: inetOrgPerson
+cn: admin_gh
+givenname: admin_gh
+sn: AdminGithub
+displayname: Admin Github User
+mail: admin_gh@corp
+userpassword: Change@123
+
+dn: cn=Admins,ou=Groups,dc=corp1
+changetype: add
+cn: Admins
+objectclass: groupOfUniqueNames
+uniqueMember: cn=admin,dc=corp1
+
+dn: cn=Maintaners,ou=Groups,dc=corp1
+changetype: add
+cn: Maintaners
+objectclass: groupOfUniqueNames
+uniqueMember: cn=maintainer,dc=corp1
+uniqueMember: cn=developer,dc=corp1

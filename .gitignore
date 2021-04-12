@@ -1,1 +1,2 @@
 tomcat/arquivos_padrao/*
+sqlserver/scripts/1-create_identityiq_tables-8.1.sql

@@ -1,12 +1,38 @@
 version: '2.3'
-services: 
+services:
+    server_smtp:
+        container_name: server_email
+        image: mailhog/mailhog
+        ports: 
+            - 1025:1025
+            - 8025:8025
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.5
+    server_ldad:
+        container_name: ad_app_mock
+        build: 
+            context: ./ldap
+        environment:
+            LDAP_ADMIN_PASSWORD: test1234
+            LDAP_BASE_DN: dc=corp1
+            LDAP_ORGANISATION: "Organização Xpto"
+            LDAP_DOMAIN: corp1
+        ports:
+            - 389:389
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.4           
     db:
         container_name: bd_sql_iiq
         build: 
-            context: ./sqlserver
+            context: ./sqlserver_iiq
         restart: always
         ports: 
             - 1433:1433
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.3         
         command: 
             bash -c "sh -x /tmp/entrypoint.sh"
         healthcheck:
@@ -20,10 +46,18 @@ services:
         ports: 
             - 8080:8080
             - 9009:9009
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.2           
         command: 
             bash -c "sh -x /tmp/entrypoint.sh"
         depends_on: 
             db:
                 condition: service_healthy
-        
-                
+networks:
+  rede_iiq:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
