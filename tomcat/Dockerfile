@@ -13,7 +13,7 @@ RUN apt-get -y update  && \
 COPY ./*.sh /tmp/
 
 #COPY FOLDER SSB
-COPY ./arquivos_padrao/ssb.zip ../
+COPY ./file_config/ssb.zip ../
 
 #CREATE ENVIRONMENT SET SPTARGET THAT SSB USE FOR BULD .WAR
 ENV SPTARGET=docker
@@ -26,10 +26,6 @@ RUN rm ../ssb.zip
 
 #PERMISSION SET
 RUN chmod -R 777 ../ssb/
-
-#HERE COPY ALL FOLDERS AND MOUNT STRUCTURE SSB FOR BUILD
-COPY ./codigo_iiq/config/* ../ssb/config/
-COPY ./codigo_iiq/web/* ../ssb/web/
 
 #BUILD SSB
 RUN cd ../ssb && sh build.sh clean war

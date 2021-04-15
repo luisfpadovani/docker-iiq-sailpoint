@@ -11,20 +11,24 @@ services:
                 ipv4_address: 10.5.0.5
     server_ldad:
         container_name: ad_app_mock
-        build: 
-            context: ./ldap
+        command: [--copy-service]
+        image: osixia/openldap:1.5.0
         environment:
             LDAP_ADMIN_PASSWORD: test1234
             LDAP_BASE_DN: dc=corp1
-            LDAP_ORGANISATION: "Organização Xpto"
+            LDAP_ORGANISATION: "Org Corp1"
             LDAP_DOMAIN: corp1
+        volumes: 
+            - ./ldap/bootstrap/schema/attributes.schema:/container/service/slapd/assets/config/bootstrap/schema/attributes.schema
+            - ./ldap/bootstrap/ldif/accounts.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/accounts.ldif            
         ports:
             - 389:389
+            - 636:636
         networks:
             rede_iiq:
-                ipv4_address: 10.5.0.4           
-    db:
-        container_name: bd_sql_iiq
+                ipv4_address: 10.5.0.4                       
+    server_db:
+        container_name: server_bd_sql
         build: 
             context: ./sqlserver_iiq
         restart: always
@@ -39,7 +43,7 @@ services:
             test: [ "CMD","/opt/mssql-tools/bin/sqlcmd", "-S" , "localhost", "-U", "healthcheck", "-P", "Change@123", "-Q", "SELECT 1" ]
             timeout: 10s
             retries: 20    
-    iiq:
+    server_web_iiq:
         container_name: web_iiq
         build: ./tomcat
         restart: always
@@ -52,8 +56,10 @@ services:
         command: 
             bash -c "sh -x /tmp/entrypoint.sh"
         depends_on: 
-            db:
+            server_db:
                 condition: service_healthy
+        volumes:
+            - /home/padovani/Projetos/file:/opt/file
 networks:
   rede_iiq:
     driver: bridge

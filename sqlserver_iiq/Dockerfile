@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04
-LABEL maintainer="Luis Padovani <luisfpadovani@outlook.com>"
 
 ENV ACCEPT_EULA=Y
 
@@ -14,7 +13,7 @@ RUN mkdir -pv /tmp/scripts
 #COPY SCRIPTS *.SQL FOR CONTAINERS
 COPY ./scripts/*.sql /tmp/scripts/
 
+RUN chmod +x /tmp/scripts/
+
 #COPY SCRIPTS *.SH FOR CONTAINERS
 COPY ./*.sh /tmp/
-
-
