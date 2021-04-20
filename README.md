@@ -1,26 +1,77 @@
-Repositorio com o intuito de facilitar o uso no desenvolvimento da ferramenta IIQ da Sailpoint
-
-------------
-<h4>Sobre </h4>
-<p>Tendo em vista a necessidade de ter uma forma de codificar e testar o IIQ, inserimos ela dentro do docker.
-Foi desenvolvido um compose com dois dockerfile para criação do ambiente inicial do produto.</p>
+# SailPoint IIQ no Docker
+![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![](https://img.shields.io/bower/v/editor.md.svg)
 
 ------------
 
+**Índice**
 
-<h4>Pastas </h4>
-<b>/sqlserver/scripts/</b> => Pasta responsavel por servir de repositorio de scripts de banco de dados,neácessrio realizar a inserção dos scripts de forma crescent. Exe: 1-ScriptEstrutural.sql , 2-ScriptExemplo.sql, 3-ScriptExemplo.sql, etc... </br>
-<b>/tomcat/arquivo_padrao/</b> => Pasta responsavel por conter ssb.zip. Necessário configurar o SSB,  contendo toda a estrutura pronta para o primeiro build do pacote. Exe: docker.iiq.properties com usuario e senha, build.properties configurado com a versão do pacote, zip do pacote dentro da pasta ga.</br>
-<b>/tomcat/codigo_iiq/custom</b> => Pasta responsavel por conter todos os codigos desenvolvidos na estrutura do SSB</br>
-<b>/tomcat/codigo_iiq/web</b> => Pasta responsavel por conter todos os codigos do produto alterado</br>
+[TOCM]
+
+[TOC]
+
+## Sobre
+Tendo em vista a necessidade de ter uma forma descomplicada de codificar e testar o IIQ, criamos uma instalação com uma infraestrutura preparada para está ferramenta.
+
+Essa é uma ótima maneira de desenvolver com o IdentityIQ rapidamente. 
+Caso você utilize o SSB como ferramenta de BUILD a utilizaçaõ dessa instalação podem ser estendida a seus ambientes produtivos.
+
+## Pré-requisitos
+Para o uso dessa instalação devemos seguir os seguintes passos.
+1.  Clonar o repositorio na sua estação de trabalho.
+2.  Realizar o download aqui https://community.sailpoint.com/ dos seguintes componentes
+	- identityiq-8.1.zip
+	- identityiq-8.1p2.jar
+	- 1_ssb-v6.1.zip
+
+**Link para realizar o download dos aplicativos fakes criados para essa instalação**
+
+###### Observações
+Observe que o IdentityIQ é um código fechado, portanto, primeiro você precisa obter uma licença para o IdentityIQ.
+
+## Configurando Volumes (Opcional)
+Para essa instalação foi inserido 3 volumes , altere somente se houver tal necessidade.
+
+> **É recomendado alterar os volumes somente se o seu sistema operacional for WINDOWS, ir para a seção do *CONFIGURANDO .ENV***
+
+## Configurando .ENV (Opcional)
+Existe na raiz deste projeto um .ENV, com alguns atributos, caso queira trocar por outros parametros ou mover os diretorios padrões da instalação, somente acessa-lo e editar.
+
+
+
+LDAP_ADMIN_PASSWORD= **Senha para o OpenLDAP criado para simular o aplicativo fake.**
+LDAP_BASE_DN=**Raiz DN do OpenLDAP criado**
+LDAP_ORGANISATION=**Nome da organização**
+LDAP_DOMAIN=**Domain do OpenLDAP**
+
+**É recomendado alterar as variaveis abaixo, caso seu sistema operacional for WINDOWS**
+
+LDAP_DATA_SCHEMA=**Schema do OpenLdap caso queira adicionar algum atributo**
+LDAP_DATA=**Contas e Grupos do OpenLdap caso queira adicionar uma nova conta ou  grupo** 
+DIRECTORY_TOMCAT_APPLICATION=**Diretorio para um arquivo com dados de identidades fakes**
+
+## Descrição dos contêiners
+- Contêiner com o IIQ SailPoint IdentityIQ8.1p2 em execução com OpenJDK e Tomcat 9.
+	-  Com um volume para o diretorio /opt/file onde existe um arquivo com algumas identidades fakes. 
+
 ------------
-<h4>Mode de uso</h4>
-<p> Depois de disponibilizar o SSB.ZIP dentro do diretorio correto (e com todas esfpecificaçes), executar o comando:</p>
 
-```yaml
+
+- Contêiner com o Banco de Dados SQL Server  2019
+	-  Para hospedar o DataBase IdentityIQ e IdentityIQPlugin.
+	-  Para hospedar o DataBase de dados AppMock para simular um aplicativo fake.
+
+------------
+
+
+- Contêiner OpenLDAP com contas para simular um aplicativo fake.
+	-  Com um volume para o arquivo **/container/service/slapd/assets/config/bootstrap/schema/attributes.schema** onde existe um schema, caso aja necessidade de adicionar novos atributos a conta. 
+	-  Com um volume para o arquivo **/container/service/slapd/assets/config/bootstrap/ldif/custom/adata.ldif** onde existe um ldif, com contas e grupos. 
+
+- Contêiner com um server de e-mail configurado para disparar E-mail's.
+
+
+## Executando contêiner
+Para executar o conteiner só necessita da linha de comando
+```
 docker-compose up
 ```
-------------
-Acessar a url:  http://localhost:8080/identityiq/
-
-<b>Utilizar usuário e senha default do pacote</b>
