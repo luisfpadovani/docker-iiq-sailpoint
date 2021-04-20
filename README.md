@@ -59,6 +59,9 @@ Existe na raiz deste projeto um .ENV, com alguns atributos, caso queira trocar p
 #### EMAIL - mailhog/mailhog
 - Contêiner com um server de e-mail configurado para disparar E-mail's.
 
+## Configurando a instalação (Opcional)
+Após realizar o download dos pré requisitos você deve mover os arquivos nos seguintes diretorios.  
+
 
 ## Executando contêiner
 Para executar o conteiner só necessita da linha de comando
