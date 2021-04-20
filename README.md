@@ -14,7 +14,7 @@ Para o uso dessa instalação devemos seguir os seguintes passos.
 	- identityiq-8.1p2.jar
 	- 1_ssb-v6.1.zip
 
-**Link para realizar o download dos aplicativos fakes criados para essa instalação**
+**Link para realizar o download dos aplicativos fakes criados para essa instalação**  
 Observe que o IdentityIQ é um código fechado, portanto, primeiro você precisa obter uma licença para o IdentityIQ.
 
 ## Configurando Volumes (Opcional)
