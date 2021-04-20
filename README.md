@@ -15,8 +15,6 @@ Para o uso dessa instalação devemos seguir os seguintes passos.
 	- 1_ssb-v6.1.zip
 
 **Link para realizar o download dos aplicativos fakes criados para essa instalação**
-
-###### Observações
 Observe que o IdentityIQ é um código fechado, portanto, primeiro você precisa obter uma licença para o IdentityIQ.
 
 ## Configurando Volumes (Opcional)
@@ -27,18 +25,16 @@ Para essa instalação foi inserido 3 volumes , altere somente se houver tal nec
 ## Configurando .ENV (Opcional)
 Existe na raiz deste projeto um .ENV, com alguns atributos, caso queira trocar por outros parametros ou mover os diretorios padrões da instalação, somente acessa-lo e editar.
 
-
-
-LDAP_ADMIN_PASSWORD= **Senha para o OpenLDAP criado para simular o aplicativo fake.**
-LDAP_BASE_DN=**Raiz DN do OpenLDAP criado**
-LDAP_ORGANISATION=**Nome da organização**
-LDAP_DOMAIN=**Domain do OpenLDAP**
+- LDAP_ADMIN_PASSWORD= **Senha para o OpenLDAP criado para simular o aplicativo fake.**
+- LDAP_BASE_DN= **Raiz DN do OpenLDAP criado**
+- LDAP_ORGANISATION= **Nome da organização**
+- LDAP_DOMAIN= **Domain do OpenLDAP**
 
 **É recomendado alterar as variaveis abaixo, caso seu sistema operacional for WINDOWS**
 
-LDAP_DATA_SCHEMA=**Schema do OpenLdap caso queira adicionar algum atributo**
-LDAP_DATA=**Contas e Grupos do OpenLdap caso queira adicionar uma nova conta ou  grupo** 
-DIRECTORY_TOMCAT_APPLICATION=**Diretorio para um arquivo com dados de identidades fakes**
+- LDAP_DATA_SCHEMA= **Schema do OpenLdap caso queira adicionar algum atributo**
+- LDAP_DATA= **Contas e Grupos do OpenLdap caso queira adicionar uma nova conta ou  grupo** 
+- DIRECTORY_TOMCAT_APPLICATION= **Diretorio para um arquivo com dados de identidades fakes**
 
 ## Descrição dos contêiners
 
