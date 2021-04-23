@@ -44,7 +44,7 @@ Os locais dos arquivos devem ser os seguintes:
 **Observação**: 
 1. É necessário alterar a senha dos usuario identityiq e identityiqPlugin do script `create_identityiq_tables-8.1.sqlserver.sqlserver` para uma senha forte **`Change@123`**    
 2. Para extrair o script `upgrade_identityiq_tables-8.1p2.sqlserver` user o comando **`jar xvf identityiq-8.1p2.jar`**
-3. Caso necessite adicionar scripts customizados para criar atributos estendido no IdentityIq, crie um **2-qualquernome.sqlserver** e adicione em **sqlserver_iiq => scripts** na montagem do ```docker-compose```
+3. Caso necessite adicionar scripts customizados para criar atributos estendido no IdentityIq, crie um **4-qualquernome.sqlserver**,**5-qualquernome.sqlserver**...**n-qualquernome.sqlserver** e adicione em **sqlserver_iiq => scripts** na montagem do ```docker-compose```
 
 #### Configuração das aplicações fake  
 1.  Caso não necessite da instalação customizada (com as 3 aplicações adicionais), inserir no arquivo docker.ignorefiles.properties  
