@@ -103,15 +103,15 @@ GO
 CREATE PROCEDURE GET_ALL_USER
 AS
 BEGIN
-        SELECT u.iduser,u.name,u.login,u.status, STRING_AGG(g.name, '; ') as profile
+        SELECT u.name,u.login,u.status, STRING_AGG(g.name, ',')  as profile
                         FROM tbl_user u 
-                INNER JOIN
+                LEFT JOIN
                         tbl_user_group ug
                         ON u.iduser = ug.iduser
-                INNER JOIN 
+                LEFT JOIN 
                         tbl_group g
                         ON g.idgroup = ug.idgroup
-        Group by u.iduser,u.name,u.login,u.status
+        Group by u.name,u.login,u.status
 END
 GO
 
@@ -121,23 +121,23 @@ CREATE PROCEDURE GET_BY_USER
 )
 AS
 BEGIN
-        SELECT u.iduser,u.name,u.login,u.status, STRING_AGG(g.name, '; ') as profile
-                FROM tbl_user u 
-         INNER JOIN
-                     tbl_user_group ug
-                ON u.iduser = ug.iduser
-         INNER JOIN 
-                     tbl_group g
-                ON g.idgroup = ug.idgroup
+        SELECT u.name,u.login,u.status, STRING_AGG(g.name, ',')  as profile
+                        FROM tbl_user u 
+                LEFT JOIN
+                        tbl_user_group ug
+                        ON u.iduser = ug.iduser
+                LEFT JOIN 
+                        tbl_group g
+                        ON g.idgroup = ug.idgroup
            where u.login = @login
-        Group by u.iduser,u.name,u.login,u.status
+        Group by u.name,u.login,u.status
 END
 GO
 
 CREATE PROCEDURE GET_ALL_GROUP
 AS
 BEGIN
-SELECT idgroup,name,description,status FROM tbl_group
+SELECT name,description,status FROM tbl_group
 END
 GO
 
@@ -146,38 +146,34 @@ CREATE PROCEDURE GET_BY_GROUP
         @name nvarchar(200)
 )
 AS
-SELECT idgroup,name,description,status FROM tbl_group where name = @name
+SELECT name,description,status FROM tbl_group where name = @name
 GO
 
-CREATE PROCEDURE INSERT_USER
+CREATE PROCEDURE [dbo].[INSERT_USER]
 (
         @name nvarchar(200),
-        @login nvarchar(200)
+        @login nvarchar(200),
+        @group nvarchar(200)
 )
 AS
 BEGIN
-        INSERT INTO tbl_user([name],[login],[status]) VALUES(@name,@login,'1');
-END
-GO
 
-CREATE PROCEDURE INSERT_USER
-(
-        @name nvarchar(200),
-        @password nvarchar(200),
-        @login nvarchar(200)
-)
-AS
-BEGIN
-     
-    IF EXISTS (SELECT 1 FROM tbl_user WHERE login = @login)    
+    IF EXISTS (SELECT 1 FROM tbl_user WHERE name = @name)    
     BEGIN
         DECLARE @Message varchar(200)
-        set @Message = CONCAT('The existing ', @login, 'login')
+        set @Message = CONCAT('The existing ', @name, 'group')
         RAISERROR(@Message, 16, 1)
     END
     ELSE
-        INSERT INTO tbl_user([name],[login],[password],[status]) VALUES(@name,@login,@password,'1');
-END 
+
+        INSERT INTO tbl_user([name],[password],[login],[status]) VALUES(@name,'Change@123',@login,'1');
+        DECLARE @idUser INT
+        set @idUser = @@IDENTITY
+
+        INSERT INTO tbl_user_group (iduser, idgroup) 
+        Select @idUser, idgroup from tbl_group where name IN(Select value from STRING_SPLIT(@group, ','))
+
+END
 GO
 
 CREATE PROCEDURE INSERT_GROUP
@@ -198,74 +194,89 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE DELETE_USER
+CREATE PROCEDURE [dbo].[DELETE_USER]
 (
         @login nvarchar(200)
 )
 AS
 BEGIN
-    DELETE FROM tbl_user where login = @login; 
+    DECLARE @idUser INT
+    set @idUser = (select idUser from tbl_user where [login] = @login)
+
+    DELETE FROM tbl_user_group where idUser = @idUser; 
+    DELETE FROM tbl_user where idUser = @idUser; 
 END
 GO
 
-CREATE PROCEDURE DELETE_GROUP
+CREATE PROCEDURE [dbo].[DELETE_GROUP]
 ( 
-        @idgroup int
+        @name varchar(200)
 )
 AS
 BEGIN
+    DECLARE @idGroup INT
+    set @idGroup = (select idGroup from tbl_group where [name] = @name)
+
+    DELETE FROM tbl_user_group where idgroup = @idGroup
     DELETE FROM tbl_group where idgroup = @idgroup
-END    
+END  
 GO
 
-CREATE PROCEDURE UPDATE_USER
+CREATE PROCEDURE [dbo].[UPDATE_USER]
  (
         @login nvarchar(200),
         @field nvarchar(200),
-        @value nvarchar(200)
+        @value nvarchar(200),
+        @group_add nvarchar(200),
+        @group_delete nvarchar(200)
  )
 AS
 BEGIN
+        DECLARE @idUser INT
+        set @idUser = (select iduser from tbl_user where [login] = @login)
+
         IF @field = 'name'
         BEGIN
-            Update tbl_user set name = @value where login = @login
+            Update tbl_user set name = @value where idUser = @idUser
         END
 
 
         IF @field = 'status'
         BEGIN
-            Update tbl_user set status = @value where login = @login
+            Update tbl_user set status = @value where idUser = @idUser
         END
 
         IF @field = 'password'
         BEGIN
-            Update tbl_user set password = @value where login = @login
+            Update tbl_user set password = @value where idUser = @idUser
         END
-END        
+
+        DELETE tbl_user_group where idgroup IN(Select idgroup From tbl_group where name IN(Select value from STRING_SPLIT(@group_delete, ',')))
+
+        INSERT INTO tbl_user_group (iduser, idgroup)
+        Select @idUser, idgroup from tbl_group where name IN(Select value from STRING_SPLIT(@group_add, ','))
+END       
 GO
 
-CREATE PROCEDURE UPDATE_GROUP
+CREATE PROCEDURE [dbo].[UPDATE_GROUP]
 (
-        @idgroup nvarchar(200),
+        @name nvarchar(200),
         @field nvarchar(200),
         @value nvarchar(200)
 )
 AS
 BEGIN
-        IF @field = 'name'
-        BEGIN
-            Update tbl_group set name = @value where idgroup = @idgroup
-        END
 
+        DECLARE @idGroup INT
+        set @idGroup = (select idGroup from tbl_group where [name] = @name)
 
         IF @field = 'description'
         BEGIN
-            Update tbl_group set description = @value where idgroup = @idgroup
+            Update tbl_group set description = @value where name = @idgroup
         END
 
-        IF @field = 'password'
+        IF @field = 'status'
         BEGIN
-            Update tbl_group set status = @value where idgroup = @idgroup
+            Update tbl_group set status = @value where name = @idgroup
         END
-END        
-GO
+END

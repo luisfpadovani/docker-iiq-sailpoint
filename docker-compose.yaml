@@ -14,13 +14,13 @@ services:
         command: [--copy-service]
         image: osixia/openldap:1.5.0
         environment:
-            LDAP_ADMIN_PASSWORD: test1234
-            LDAP_BASE_DN: dc=corp1
-            LDAP_ORGANISATION: "Org Corp1"
-            LDAP_DOMAIN: corp1
+            LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+            LDAP_BASE_DN: ${LDAP_BASE_DN}
+            LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+            LDAP_DOMAIN: ${LDAP_DOMAIN}
         volumes: 
-            - ./ldap/bootstrap/schema/attributes.schema:/container/service/slapd/assets/config/bootstrap/schema/attributes.schema
-            - ./ldap/bootstrap/ldif/accounts.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/accounts.ldif            
+            - ${LDAP_DATA_SCHEMA}:/container/service/slapd/assets/config/bootstrap/schema/attributes.schema
+            - ${LDAP_DATA}:/container/service/slapd/assets/config/bootstrap/ldif/custom/adata.ldif         
         ports:
             - 389:389
             - 636:636
@@ -59,7 +59,7 @@ services:
             server_db:
                 condition: service_healthy
         volumes:
-            - /home/padovani/Projetos/file:/opt/file
+            - ${DIRECTORY_TOMCAT_APPLICATION}:/opt/file/
 networks:
   rede_iiq:
     driver: bridge

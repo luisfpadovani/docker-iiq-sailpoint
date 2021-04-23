@@ -8,6 +8,18 @@ changetype: add
 objectclass: organizationalUnit
 ou: Users
 
+dn: cn=00000000,ou=Users,dc=corp1
+changetype: add
+objectclass: inetOrgPerson
+cn: 00000000
+givenname: Luis
+sn: Padovani
+displayname: Luis Padovani
+mail: luis@corp
+userpassword: Change@123
+objectclass: personnel
+employeeID: 00000000
+
 dn: cn=00000001,ou=Users,dc=corp1
 changetype: add
 objectclass: inetOrgPerson
@@ -44,21 +56,16 @@ userpassword: Change@123
 objectclass: personnel
 employeeID: 00000004
 
-
 dn: cn=Admins,ou=Groups,dc=corp1
 changetype: add
 cn: Admins
 objectclass: groupOfUniqueNames
-uniqueMember: cn=00000001,dc=corp1
+uniqueMember: cn=00000001,ou=Users,dc=corp1
+uniqueMember: cn=00000000,ou=Users,dc=corp1
 
 dn: cn=Maintaners,ou=Groups,dc=corp1
 changetype: add
 cn: Maintaners
 objectclass: groupOfUniqueNames
-uniqueMember: cn=00000003,dc=corp1
-
-dn: cn=AcessBasic,ou=Groups,dc=corp1
-changetype: add
-cn: AcessBasic
-objectclass: groupOfUniqueNames
-uniqueMember: cn=00000004,dc=corp1
+uniqueMember: cn=00000003,ou=Users,dc=corp1
+uniqueMember: cn=00000000,ou=Users,dc=corp1
